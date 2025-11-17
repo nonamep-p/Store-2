@@ -110,7 +110,7 @@ export function Header() {
                   <span className="sr-only">Search</span>
                 </Button>
               )}
-            </motion.div>
+            </div >
 
             {/* Wishlist */}
             <Button
