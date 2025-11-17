@@ -2,7 +2,7 @@
 
 import { useState, useEffect, FormEvent } from 'react';
 import Link from 'next/link';
-import { ShoppingCart, Search, Menu, X, Heart } from 'lucide-react';
+import { ShoppingCart, Search, Menu, X, Heart, ShoppingBag } from 'lucide-react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -144,9 +144,14 @@ export function Header() {
                   <span className="sr-only">Open Cart</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent className="flex w-full flex-col sm:max-w-lg">
-                <SheetHeader>
-                  <SheetTitle>Shopping Cart</SheetTitle>
+              <SheetContent className="flex w-full flex-col sm:max-w-lg p-0">
+                <SheetHeader className="p-6 border-b border-border">
+                  <SheetTitle>
+                    <div className="flex items-center gap-3">
+                        <ShoppingBag className="w-6 h-6 text-primary" />
+                        <span>Shopping Cart</span>
+                    </div>
+                  </SheetTitle>
                 </SheetHeader>
                 <CartSheetContent />
               </SheetContent>
