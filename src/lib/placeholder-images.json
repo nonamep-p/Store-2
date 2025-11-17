@@ -1,3 +1,76 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "1",
+      "description": "Aura Smart Lamp",
+      "imageUrl": "https://images.unsplash.com/photo-1571406487954-dc11b0c0767d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8c21hcnQlMjBsYW1wfGVufDB8fHx8MTc2MzQxMjIxOHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "smart lamp"
+    },
+    {
+      "id": "2",
+      "description": "Flow Mechanical Keyboard",
+      "imageUrl": "https://images.unsplash.com/photo-1558050032-160f36233a07?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtZWNoYW5pY2FsJTIwa2V5Ym9hcmR8ZW58MHx8fHwxNzYzMzQ1OTQ5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "mechanical keyboard"
+    },
+    {
+      "id": "3",
+      "description": "Eco-Carry Tote Bag",
+      "imageUrl": "https://images.unsplash.com/photo-1610282081854-9c311350beb9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHx0b3RlJTIwYmFnfGVufDB8fHx8MTc2MzQxMjIxOHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "tote bag"
+    },
+    {
+      "id": "4",
+      "description": "Zenith Wireless Earbuds",
+      "imageUrl": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHx3aXJlbGVzcyUyMGVhcmJ1ZHN8ZW58MHx8fHwxNzYzMzEyMjI5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "wireless earbuds"
+    },
+    {
+      "id": "5",
+      "description": "Orbit Desk Organizer",
+      "imageUrl": "https://images.unsplash.com/photo-1661493818626-629b09c2f4d2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxkZXNrJTIwb3JnYW5pemVyfGVufDB8fHx8MTc2MzM4NTE3OXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "desk organizer"
+    },
+    {
+      "id": "6",
+      "description": "Pure-Mist Humidifier",
+      "imageUrl": "https://images.unsplash.com/photo-1570460250092-03194384d8ed?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjb29sJTIwbWlzdHxlbnwwfHx8fDE3NjM0MTIyMTh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cool mist"
+    },
+    {
+      "id": "7",
+      "description": "Momentum Smart Watch",
+      "imageUrl": "https://images.unsplash.com/photo-1551816230-ef5deaed4a26?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxzbWFydCUyMHdhdGNofGVufDB8fHx8MTc2MzM0MTAwN3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "smart watch"
+    },
+    {
+      "id": "8",
+      "description": "Creator Fountain Pen",
+      "imageUrl": "https://images.unsplash.com/photo-1509652839609-d94a8ad572db?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxmb3VudGFpbiUyMHBlbnxlbnwwfHx8fDE3NjMzNDcwMjZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "fountain pen"
+    },
+    {
+      "id": "9",
+      "description": "Nomad Travel Backpack",
+      "imageUrl": "https://images.unsplash.com/photo-1491637639811-60e2756cc1c7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx0cmF2ZWwlMjBiYWNrcGFja3xlbnwwfHx8fDE3NjMyOTQzMzV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "travel backpack"
+    },
+    {
+      "id": "10",
+      "description": "Power-Up Charging Station",
+      "imageUrl": "https://images.unsplash.com/photo-1696835307664-bac3f44ff9a5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxjaGFyZ2luZyUyMHN0YXRpb258ZW58MHx8fHwxNzYzNDEyMjE4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "charging station"
+    },
+    {
+      "id": "11",
+      "description": "Ergo-Pro Office Chair",
+      "imageUrl": "https://images.unsplash.com/photo-1572521165329-b197f9ea3da6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxvZmZpY2UlMjBjaGFpcnxlbnwwfHx8fDE3NjM0MDc1NzZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "office chair"
+    },
+    {
+      "id": "12",
+      "description": "Terra Recycled Beanie",
+      "imageUrl": "https://images.unsplash.com/photo-1664289321767-8442abbd5e26?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxiZWFuaWUlMjBoYXR8ZW58MHx8fHwxNzYzMzMzNzk5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "beanie hat"
+    }
+  ]
 }
