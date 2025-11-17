@@ -1,115 +1,89 @@
 'use client';
 
-import { useState, useMemo, Suspense } from 'react';
+import { useState, useMemo, Suspense, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 
-import { products, categories, tags } from '@/lib/data';
+import { products } from '@/lib/data';
 import { ProductCard } from '@/components/app/product-card';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Label } from '@/components/ui/label';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
+import { FilterSidebar } from '@/components/app/filter-sidebar';
+import { Filter } from 'lucide-react';
+
+type Filters = {
+  priceRange: [number, number];
+  categories: string[];
+  tags: string[];
+  sizes: string[];
+  colors: string[];
+};
 
 function ProductPageContent() {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get('q') || '';
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [filters, setFilters] = useState<Filters>({
+    priceRange: [0, 500],
+    categories: [],
+    tags: [],
+    sizes: [],
+    colors: [],
+  });
 
-  const handleCategoryChange = (category: string) => {
-    setSelectedCategories((prev) =>
-      prev.includes(category)
-        ? prev.filter((c) => c !== category)
-        : [...prev, category]
-    );
-  };
+  const handleFilterChange = useCallback((newFilters: Filters) => {
+    setFilters(newFilters);
+  }, []);
 
-  const handleTagChange = (tag: string) => {
-    setSelectedTags((prev) =>
-      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
-    );
-  };
-  
   const clearFilters = () => {
-    setSelectedCategories([]);
-    setSelectedTags([]);
+    setFilters({
+      priceRange: [0, 500],
+      categories: [],
+      tags: [],
+      sizes: [],
+      colors: [],
+    });
   }
 
   const filteredProducts = useMemo(() => {
     return products.filter((product) => {
       const matchesCategory =
-        selectedCategories.length === 0 ||
-        selectedCategories.includes(product.category);
+        filters.categories.length === 0 ||
+        filters.categories.includes(product.category);
       const matchesTag =
-        selectedTags.length === 0 ||
-        product.tags.some((tag) => selectedTags.includes(tag));
+        filters.tags.length === 0 ||
+        product.tags.some((tag) => filters.tags.includes(tag));
       const matchesSearch =
         searchQuery === '' ||
         product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         product.description.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesPrice =
+        product.price >= filters.priceRange[0] && product.price <= filters.priceRange[1];
 
-      return matchesCategory && matchesTag && matchesSearch;
+      return matchesCategory && matchesTag && matchesSearch && matchesPrice;
     });
-  }, [selectedCategories, selectedTags, searchQuery]);
+  }, [filters, searchQuery]);
 
   return (
     <div className="container py-12">
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
-        <aside className="md:col-span-1">
-          <div className="sticky top-20">
-            <h2 className="text-xl font-semibold">Filters</h2>
-            <Separator className="my-4" />
-            <ScrollArea className="h-[calc(100vh-12rem)]">
-              <div className="space-y-6 pr-4">
-                <div>
-                  <h3 className="font-semibold">Category</h3>
-                  <div className="mt-3 space-y-2">
-                    {categories.map((category) => (
-                      <div key={category} className="flex items-center space-x-2">
-                        <Checkbox
-                          id={`cat-${category}`}
-                          checked={selectedCategories.includes(category)}
-                          onCheckedChange={() => handleCategoryChange(category)}
-                        />
-                        <Label htmlFor={`cat-${category}`}>{category}</Label>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <Separator />
-                <div>
-                  <h3 className="font-semibold">Tags</h3>
-                  <div className="mt-3 space-y-2">
-                    {tags.map((tag) => (
-                      <div key={tag} className="flex items-center space-x-2">
-                        <Checkbox
-                          id={`tag-${tag}`}
-                          checked={selectedTags.includes(tag)}
-                          onCheckedChange={() => handleTagChange(tag)}
-                        />
-                        <Label htmlFor={`tag-${tag}`} className="capitalize">{tag}</Label>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </ScrollArea>
-             {(selectedCategories.length > 0 || selectedTags.length > 0) && (
-                <>
-                <Separator className="my-4" />
-                <Button onClick={clearFilters} variant="secondary" className="w-full">Clear Filters</Button>
-                </>
-             )}
-          </div>
-        </aside>
+      <div className="flex gap-8">
+        <FilterSidebar 
+          isOpen={sidebarOpen}
+          onClose={() => setSidebarOpen(false)}
+          filters={filters}
+          onFilterChange={handleFilterChange}
+        />
 
-        <main className="md:col-span-3">
-          <h1 className="mb-6 text-3xl font-bold">
-            {searchQuery ? `Results for "${searchQuery}"` : 'All Products'}
-          </h1>
+        <main className="flex-1">
+          <div className="flex justify-between items-center mb-6">
+            <h1 className="text-3xl font-bold">
+              {searchQuery ? `Results for "${searchQuery}"` : 'All Products'}
+            </h1>
+            <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setSidebarOpen(true)}>
+              <Filter />
+            </Button>
+          </div>
+
           {filteredProducts.length > 0 ? (
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
               {filteredProducts.map((product) => (
@@ -122,6 +96,7 @@ function ProductPageContent() {
               <p className="mt-2 text-muted-foreground">
                 Try adjusting your search or filters.
               </p>
+               <Button onClick={clearFilters} variant="secondary" className="mt-4">Clear Filters</Button>
             </div>
           )}
         </main>
@@ -142,7 +117,7 @@ function ProductPageSkeleton() {
   return (
      <div className="container py-12">
       <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
-        <aside className="md:col-span-1">
+        <aside className="md:col-span-1 hidden md:block">
           <Skeleton className="h-[calc(100vh-8rem)] w-full" />
         </aside>
         <main className="md:col-span-3">
