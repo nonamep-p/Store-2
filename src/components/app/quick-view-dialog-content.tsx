@@ -3,13 +3,13 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { Minus, Plus, ShoppingCart, Heart } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 import type { Product } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/cart-context';
 import { getPlaceholderImageById } from '@/lib/placeholder-images';
 import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 
@@ -24,7 +24,6 @@ export function QuickViewDialogContent({ product }: QuickViewDialogContentProps)
   const [selectedSize, setSelectedSize] = useState<string>("9");
   const placeholderImage = getPlaceholderImageById(product.image);
 
-  // In a real app, you would have multiple images. We'll simulate this.
   const images = [placeholderImage, placeholderImage, placeholderImage];
   const [selectedImage, setSelectedImage] = useState(0);
 
@@ -43,9 +42,13 @@ export function QuickViewDialogContent({ product }: QuickViewDialogContentProps)
 
   return (
     <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-       {/* Left: Images */}
        <div className="flex flex-col gap-4">
-        <div className="relative aspect-square overflow-hidden rounded-lg">
+          <motion.div
+            key={selectedImage}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="relative aspect-square overflow-hidden rounded-lg"
+          >
             <Image
                 src={images[selectedImage]?.imageUrl || '/placeholder.svg'}
                 alt={product.name}
@@ -53,15 +56,16 @@ export function QuickViewDialogContent({ product }: QuickViewDialogContentProps)
                 className="object-cover"
                 data-ai-hint={images[selectedImage]?.imageHint}
             />
-        </div>
+        </motion.div>
         <div className="grid grid-cols-3 gap-4">
             {images.map((img, idx) => (
-            <button
+            <motion.button
                 key={idx}
+                whileHover={{ scale: 1.05 }}
                 onClick={() => setSelectedImage(idx)}
                 className={`relative aspect-square rounded-lg overflow-hidden border-2 transition-all ${
                 selectedImage === idx
-                    ? "border-accent"
+                    ? "border-purple-500"
                     : "border-transparent hover:border-border"
                 }`}
             >
@@ -72,16 +76,15 @@ export function QuickViewDialogContent({ product }: QuickViewDialogContentProps)
                 className="object-cover"
                 data-ai-hint={img?.imageHint}
                 />
-            </button>
+            </motion.button>
             ))}
         </div>
       </div>
 
-      {/* Right: Details */}
       <div className="flex flex-col">
         <div className="flex gap-2 mb-2">
             {product.tags.includes('new') && (
-                <Badge variant="outline" className="border-accent text-accent">NEW</Badge>
+                <Badge className="bg-purple-500 text-white">NEW</Badge>
             )}
             {product.tags.includes('sale') && (
                 <Badge variant="destructive">SALE</Badge>
@@ -90,13 +93,14 @@ export function QuickViewDialogContent({ product }: QuickViewDialogContentProps)
         <p className="text-muted-foreground mb-1">{product.category}</p>
         <h2 className="text-3xl font-bold mb-3">{product.name}</h2>
 
-        <p className="text-3xl font-bold text-primary mb-6">${product.price.toFixed(2)}</p>
+        <div className="flex items-center gap-3 mb-6">
+            <span className="text-3xl font-bold text-primary">${product.price.toFixed(2)}</span>
+        </div>
         
         <p className="text-muted-foreground mb-6">
           {product.longDescription}
         </p>
 
-        {/* Size Selection */}
         <div className="mb-6">
             <Label className="mb-3 block font-semibold">Select Size</Label>
             <div className="grid grid-cols-6 gap-2">
@@ -105,7 +109,11 @@ export function QuickViewDialogContent({ product }: QuickViewDialogContentProps)
                     key={size}
                     variant={selectedSize === size ? "secondary" : "outline"}
                     onClick={() => setSelectedSize(size)}
-                    className="py-3 text-sm"
+                    className={`py-3 text-sm transition-all ${
+                        selectedSize === size
+                          ? "bg-purple-500 border-purple-500 text-white"
+                          : "border-white/20 hover:border-white/40"
+                      }`}
                 >
                     {size}
                 </Button>
@@ -113,7 +121,6 @@ export function QuickViewDialogContent({ product }: QuickViewDialogContentProps)
             </div>
         </div>
 
-        {/* Quantity */}
         <div className="mb-8">
             <Label className="mb-3 block font-semibold">Quantity</Label>
             <div className="flex items-center gap-4">
@@ -135,11 +142,10 @@ export function QuickViewDialogContent({ product }: QuickViewDialogContentProps)
             </div>
         </div>
 
-        {/* Actions */}
         <div className="flex gap-4 mt-auto">
             <Button
                 size="lg"
-                className="flex-1"
+                className="flex-1 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white"
                 onClick={handleAddToCart}
             >
                 <ShoppingCart className="w-5 h-5 mr-2" />
