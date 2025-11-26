@@ -1,6 +1,8 @@
 'use client';
 import { Instagram, Twitter, Facebook, Youtube } from "lucide-react";
 import { motion } from "framer-motion";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 
 export function Footer() {
   const footerLinks = {
@@ -19,15 +21,42 @@ export function Footer() {
   return (
     <footer className="border-t">
       <div className="container py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
-          {/* Brand */}
-          <div className="lg:col-span-2">
-            <h2 className="gradient-text mb-4 text-2xl font-bold">Zenith Market</h2>
-            <p className="text-muted-foreground mb-6 max-w-sm">
-              Premium goods for those who dare to stand out. Experience the perfect blend of
-              style, comfort, and performance.
-            </p>
-            <div className="flex gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-12">
+            <div className="lg:col-span-1">
+                <h4 className="font-semibold mb-4">Stay in the loop</h4>
+                <p className="text-muted-foreground text-sm mb-4">
+                    Subscribe to our newsletter for the latest drops, deals, and updates.
+                </p>
+                <form className="flex gap-2">
+                    <Input type="email" placeholder="Enter your email" />
+                    <Button type="submit">Subscribe</Button>
+                </form>
+            </div>
+            <div className="lg:col-span-2 grid grid-cols-2 md:grid-cols-3 gap-8">
+                 {Object.entries(footerLinks).map(([category, links]) => (
+                    <div key={category}>
+                    <h4 className="mb-4 font-semibold">{category}</h4>
+                    <ul className="space-y-3">
+                        {links.map((link) => (
+                        <li key={link}>
+                            <a
+                            href="#"
+                            className="text-muted-foreground hover:text-foreground transition-colors text-sm"
+                            >
+                            {link}
+                            </a>
+                        </li>
+                        ))}
+                    </ul>
+                    </div>
+                ))}
+            </div>
+        </div>
+
+
+        {/* Bottom */}
+        <div className="pt-8 border-t flex flex-col sm:flex-row justify-between items-center gap-4">
+           <div className="flex gap-4">
               {socialLinks.map((social) => (
                 <motion.a
                   key={social.label}
@@ -41,41 +70,9 @@ export function Footer() {
                 </motion.a>
               ))}
             </div>
-          </div>
-
-          {/* Links */}
-          {Object.entries(footerLinks).map(([category, links]) => (
-            <div key={category}>
-              <h4 className="mb-4 font-semibold">{category}</h4>
-              <ul className="space-y-3">
-                {links.map((link) => (
-                  <li key={link}>
-                    <a
-                      href="#"
-                      className="text-muted-foreground hover:text-foreground transition-colors text-sm"
-                    >
-                      {link}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-
-        {/* Bottom */}
-        <div className="pt-8 border-t flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-muted-foreground text-sm">
             &copy; {new Date().getFullYear()} Zenith Market. All rights reserved.
           </p>
-          <div className="flex gap-6">
-            <a href="#" className="text-muted-foreground hover:text-foreground text-sm transition-colors">
-              Privacy Policy
-            </a>
-            <a href="#" className="text-muted-foreground hover:text-foreground text-sm transition-colors">
-              Terms of Service
-            </a>
-          </div>
         </div>
       </div>
     </footer>
