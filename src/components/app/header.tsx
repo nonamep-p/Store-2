@@ -126,7 +126,7 @@ export function Header() {
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-8">
             {navLinks.map((link) => (
-              <motion.div key={link.href} whileHover={{ scale: 1.05 }}>
+              <motion.div key={`${link.href}-${link.label}`} whileHover={{ scale: 1.05 }}>
                 <Link
                   href={link.href}
                   className={`text-sm font-medium transition-colors hover:text-primary ${
@@ -205,7 +205,7 @@ export function Header() {
             <div className="container py-4 space-y-4">
               {navLinks.map((link, index) => (
                 <motion.div
-                  key={link.href}
+                  key={`${link.href}-${link.label}`}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.1 }}
@@ -226,5 +226,3 @@ export function Header() {
     </motion.header>
   );
 }
-
-    
