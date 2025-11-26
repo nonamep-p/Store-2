@@ -20,7 +20,7 @@ Welcome to Zenith Market, a modern, feature-rich e-commerce storefront built wit
 - **UI Components**: [ShadCN UI](https://ui.shadcn.com/), [Radix UI](https://www.radix-ui.com/), [Framer Motion](https://www.framer.com/motion/)
 - **State Management**: React Context API
 - **Generative AI**: [Genkit](https://firebase.google.com/docs/genkit)
-- **Deployment**: [Firebase App Hosting](https://firebase.google.com/docs/app-hosting)
+- **Deployment**: [Vercel](https://vercel.com/)
 
 ## Getting Started
 
@@ -67,12 +67,14 @@ npm run start
 
 ## Deployment
 
-This project is configured for continuous deployment to **Firebase App Hosting** via **GitHub Actions**.
+This project is ready for deployment on **Vercel**.
 
-- **Production Deployment**: Pushing or merging changes to the `main` branch will automatically trigger a build and deploy the application to the live channel.
-- **Preview Deployments**: Opening a pull request against the `main` branch will automatically build the changes and deploy them to a unique, temporary preview URL.
+Once you have pushed your code to your GitHub repository, you can deploy it to Vercel by following these steps:
 
-To enable this, you will need to configure the following secrets in your GitHub repository's settings under `Settings > Secrets and variables > Actions`:
+1.  Sign up for a Vercel account at [vercel.com](https://vercel.com).
+2.  Go to your Vercel dashboard and click **Add New...** > **Project**.
+3.  Import your GitHub repository (`nonamep-p/Store-2`).
+4.  Vercel will automatically detect that you're using Next.js and configure the build settings for you.
+5.  Click **Deploy**.
 
-- `FIREBASE_SERVICE_ACCOUNT`: Your Firebase service account JSON key.
-- `FIREBASE_PROJECT_ID`: Your Firebase project ID.
+Vercel will then build and deploy your application, providing you with a live URL.
