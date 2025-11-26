@@ -1,3 +1,4 @@
+
 import { products } from '@/lib/data';
 import { Hero } from '@/components/app/hero';
 import { CountdownTimer } from '@/components/app/countdown-timer';

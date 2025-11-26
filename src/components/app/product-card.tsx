@@ -1,3 +1,4 @@
+
 'use client';
 
 import { motion } from 'framer-motion';
@@ -52,7 +53,7 @@ export function ProductCard({ product }: ProductCardProps) {
             <motion.div
               initial={{ opacity: 0 }}
               whileHover={{ opacity: 1 }}
-              className="absolute inset-0 bg-black/60 flex items-center justify-center gap-2"
+              className="absolute inset-0 bg-black/40 flex items-center justify-center gap-2"
             >
               <DialogTrigger asChild>
                 <motion.div
@@ -64,9 +65,9 @@ export function ProductCard({ product }: ProductCardProps) {
                     size="icon"
                     variant="secondary"
                     aria-label="Quick view"
-                    className="bg-white/90 hover:bg-white"
+                    className="bg-white/90 hover:bg-white text-foreground"
                     >
-                    <Eye className="w-5 h-5 text-black" />
+                    <Eye className="w-5 h-5" />
                     </Button>
                 </motion.div>
               </DialogTrigger>
@@ -79,7 +80,7 @@ export function ProductCard({ product }: ProductCardProps) {
                     size="icon"
                     onClick={() => addToCart(product)}
                     aria-label="Add to cart"
-                    className="bg-purple-500 hover:bg-purple-600 text-white"
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground"
                     >
                     <ShoppingCart className="w-5 h-5" />
                     </Button>
@@ -88,11 +89,8 @@ export function ProductCard({ product }: ProductCardProps) {
 
 
             <div className="absolute top-3 left-3 flex flex-col gap-2">
-              {product.tags.map(tag => (
-                <Badge key={tag} className={`${tag === 'new' ? 'bg-purple-500' : tag === 'sale' ? 'bg-red-500' : 'bg-secondary'} text-white capitalize`}>
-                  {tag}
-                </Badge>
-              ))}
+              {product.tags.includes('new') && <Badge>NEW</Badge>}
+              {product.tags.includes('sale') && <Badge variant="destructive">SALE</Badge>}
             </div>
 
             <motion.button
@@ -105,8 +103,8 @@ export function ProductCard({ product }: ProductCardProps) {
               className="absolute top-3 right-3 p-2 rounded-full bg-white/90 hover:bg-white transition-colors"
             >
               <Heart
-                className={`w-5 h-5 ${
-                  isFavorited ? "fill-red-500 text-red-500" : "text-black"
+                className={`w-5 h-5 transition-colors ${
+                  isFavorited ? "fill-red-500 text-red-500" : "text-foreground"
                 }`}
               />
             </motion.button>
@@ -121,27 +119,10 @@ export function ProductCard({ product }: ProductCardProps) {
                 ${product.price.toFixed(2)}
                 </span>
             </div>
-            
-            <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                whileInView={{ height: "auto", opacity: 1}}
-                className="overflow-hidden"
-            >
-                <div className="flex gap-2 mt-3">
-                    {["7", "8", "9", "10", "11"].map((size) => (
-                    <button
-                        key={size}
-                        className="px-2 py-1 text-xs border border-white/20 rounded hover:bg-white/10 transition-colors"
-                    >
-                        {size}
-                    </button>
-                    ))}
-                </div>
-            </motion.div>
           </div>
         </CardContent>
       </Card>
-      <DialogContent className="max-w-4xl">
+      <DialogContent className="max-w-4xl p-0 border-0">
         <QuickViewDialogContent product={product} />
       </DialogContent>
     </Dialog>

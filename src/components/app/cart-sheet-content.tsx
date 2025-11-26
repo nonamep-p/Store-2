@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -18,7 +19,7 @@ import { Skeleton } from '../ui/skeleton';
 export function CartSheetContent() {
   const { cart, removeFromCart, updateQuantity, totalItems, totalPrice } = useCart();
   const cartProductIds = cart.map(item => item.product.id);
-  const shipping = totalPrice > 0 ? 10 : 0;
+  const shipping = totalPrice > 0 ? 0 : 0;
   const total = totalPrice + shipping;
 
   if (totalItems === 0) {
@@ -65,7 +66,7 @@ export function CartSheetContent() {
 
                 <div className="flex-1 min-w-0">
                   <h4 className="text-sm font-semibold mb-1 truncate">{item.product.name}</h4>
-                  <p className="text-white font-bold">${item.product.price.toFixed(2)}</p>
+                  <p className="font-bold">${item.product.price.toFixed(2)}</p>
 
                   <div className="flex items-center gap-2 mt-3">
                     <Button
@@ -92,7 +93,7 @@ export function CartSheetContent() {
 
                 <button
                   onClick={() => removeFromCart(item.product.id)}
-                  className="self-start p-2 hover:bg-white/10 rounded transition-colors"
+                  className="self-start p-2 hover:bg-muted-foreground/20 rounded-full transition-colors"
                 >
                   <Trash2 className="w-4 h-4 text-red-500" />
                 </button>
@@ -110,7 +111,7 @@ export function CartSheetContent() {
         </Suspense>
       </ScrollArea>
       {cart.length > 0 && (
-         <SheetFooter className="mt-auto border-t border-white/10 p-6 space-y-4">
+         <SheetFooter className="mt-auto border-t p-6 space-y-4">
             <div className="w-full space-y-2">
                 <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">Subtotal</span>
@@ -118,15 +119,15 @@ export function CartSheetContent() {
                 </div>
                 <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">Shipping</span>
-                <span>${shipping.toFixed(2)}</span>
+                <span>{shipping > 0 ? `$${shipping.toFixed(2)}` : 'Free'}</span>
                 </div>
-                <div className="flex justify-between pt-2 border-t border-white/10 font-bold">
+                <div className="flex justify-between pt-2 border-t font-bold">
                 <span>Total</span>
                 <span>${total.toFixed(2)}</span>
                 </div>
             </div>
             <SheetClose asChild>
-                <Button asChild size="lg" className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white">
+                <Button asChild size="lg" className="w-full">
                     <Link href="/checkout">Checkout</Link>
                 </Button>
             </SheetClose>
@@ -139,7 +140,7 @@ export function CartSheetContent() {
 function RecommendationSkeleton() {
   return (
     <div>
-      <h2 className="mb-6 text-2xl font-bold">Based on your cart</h2>
+      <h2 className="mb-6 text-xl font-bold">Based on your cart</h2>
       <div className="flex space-x-4">
         <div className="w-1/2 space-y-2">
           <Skeleton className="aspect-square w-full" />

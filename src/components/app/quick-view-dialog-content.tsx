@@ -1,3 +1,4 @@
+
 'use client';
 
 import Image from 'next/image';
@@ -65,7 +66,7 @@ export function QuickViewDialogContent({ product }: QuickViewDialogContentProps)
                 onClick={() => setSelectedImage(idx)}
                 className={`relative aspect-square rounded-lg overflow-hidden border-2 transition-all ${
                 selectedImage === idx
-                    ? "border-purple-500"
+                    ? "border-primary"
                     : "border-transparent hover:border-border"
                 }`}
             >
@@ -84,7 +85,7 @@ export function QuickViewDialogContent({ product }: QuickViewDialogContentProps)
       <div className="flex flex-col">
         <div className="flex gap-2 mb-2">
             {product.tags.includes('new') && (
-                <Badge className="bg-purple-500 text-white">NEW</Badge>
+                <Badge className="bg-primary text-primary-foreground">NEW</Badge>
             )}
             {product.tags.includes('sale') && (
                 <Badge variant="destructive">SALE</Badge>
@@ -107,13 +108,9 @@ export function QuickViewDialogContent({ product }: QuickViewDialogContentProps)
                 {sizes.map((size) => (
                 <Button
                     key={size}
-                    variant={selectedSize === size ? "secondary" : "outline"}
+                    variant={selectedSize === size ? "default" : "outline"}
                     onClick={() => setSelectedSize(size)}
-                    className={`py-3 text-sm transition-all ${
-                        selectedSize === size
-                          ? "bg-purple-500 border-purple-500 text-white"
-                          : "border-white/20 hover:border-white/40"
-                      }`}
+                    className="py-3 text-sm transition-all"
                 >
                     {size}
                 </Button>
@@ -145,7 +142,7 @@ export function QuickViewDialogContent({ product }: QuickViewDialogContentProps)
         <div className="flex gap-4 mt-auto">
             <Button
                 size="lg"
-                className="flex-1 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white"
+                className="flex-1"
                 onClick={handleAddToCart}
             >
                 <ShoppingCart className="w-5 h-5 mr-2" />

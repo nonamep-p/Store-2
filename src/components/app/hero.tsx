@@ -1,22 +1,23 @@
+
 'use client';
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ChevronDown } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
 import Image from "next/image";
 import { getPlaceholderImageById } from "@/lib/placeholder-images";
+import Link from 'next/link';
 
 export function Hero() {
     const heroImage = getPlaceholderImageById("13");
   return (
     <section className="relative h-screen w-full overflow-hidden">
-      {/* Background Image with Parallax Effect */}
       <motion.div
-        initial={{ scale: 1.2 }}
+        initial={{ scale: 1.1 }}
         animate={{ scale: 1 }}
         transition={{ duration: 1.5, ease: "easeOut" }}
         className="absolute inset-0"
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black z-10" />
+        <div className="absolute inset-0 bg-black/50 z-10" />
         {heroImage && (
             <Image
                 src={heroImage.imageUrl}
@@ -30,8 +31,8 @@ export function Hero() {
       </motion.div>
 
       {/* Content */}
-      <div className="relative z-20 h-full flex items-center justify-center">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="relative z-20 h-full flex flex-col items-center justify-center">
+        <div className="container text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -41,24 +42,22 @@ export function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
-              className="text-purple-400 mb-4 tracking-widest uppercase"
+              className="text-primary mb-4 tracking-widest uppercase font-semibold"
             >
-              Exclusive Collection
+              Elevate Your Everyday
             </motion.p>
 
-            <h1 className="text-white mb-6 max-w-4xl mx-auto">
-              Step Into the{" "}
-              <span className="gradient-text">Future</span>
+            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 max-w-4xl mx-auto leading-tight">
+              Curated Goods for a Life Well-Lived
             </h1>
 
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.7 }}
-              className="text-white/70 mb-8 max-w-2xl mx-auto"
+              className="text-white/80 mb-8 max-w-2xl mx-auto text-lg"
             >
-              Discover premium sneakers that blend cutting-edge design with unparalleled comfort.
-              Shop the latest drops from the world's most coveted brands.
+              Discover high-quality products that blend form, function, and purpose. Built to last and designed to inspire.
             </motion.p>
 
             <motion.div
@@ -67,38 +66,18 @@ export function Hero() {
               transition={{ delay: 0.9 }}
               className="flex flex-col sm:flex-row gap-4 justify-center"
             >
-              <Button
-                size="lg"
-                className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white border-0 px-8 py-6"
-              >
-                Shop Now
+              <Button asChild size="lg" className="px-8 py-6 text-lg">
+                <Link href="/products">
+                  Shop Now <ArrowRight className="ml-2" />
+                </Link>
               </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-white/30 text-white hover:bg-white/10 px-8 py-6"
-              >
-                View Collection
+              <Button asChild size="lg" variant="outline" className="text-white border-white/30 hover:bg-white/10 px-8 py-6 text-lg">
+                <Link href="#our-story">Learn More</Link>
               </Button>
             </motion.div>
           </motion.div>
         </div>
       </div>
-
-      {/* Scroll Indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20"
-      >
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <ChevronDown className="w-8 h-8 text-white/50" />
-        </motion.div>
-      </motion.div>
     </section>
   );
 }
