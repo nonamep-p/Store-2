@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState, useEffect, FormEvent } from 'react';
+import { useState, useEffect, FormEvent, Suspense } from 'react';
 import Link from 'next/link';
 import { ShoppingCart, Search, Menu, X, User } from 'lucide-react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -21,24 +21,11 @@ import { CartSheetContent } from '@/components/app/cart-sheet-content';
 import { useCart } from '@/context/cart-context';
 
 
-export function Header() {
-  const pathname = usePathname();
+function SearchBar() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { totalItems } = useCart();
   const defaultSearch = searchParams.get('q') || '';
-
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -48,6 +35,63 @@ export function Header() {
     setSearchOpen(false);
   };
   
+  return (
+    <>
+      <Button
+        variant="ghost"
+        size="icon"
+        onClick={() => setSearchOpen(!searchOpen)}
+        className="text-foreground hover:bg-accent"
+      >
+        <Search className="w-5 h-5" />
+        <span className="sr-only">Search</span>
+      </Button>
+      <AnimatePresence>
+        {searchOpen && (
+          <motion.div 
+            initial={{ height: 0, opacity: 0}}
+            animate={{ height: 'auto', opacity: 1}}
+            exit={{ height: 0, opacity: 0}}
+            className="overflow-hidden absolute top-full left-0 right-0 bg-background border-b"
+          >
+            <div className="container py-4">
+            <form onSubmit={handleSearch}>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <Input
+                  type="text"
+                  name="search"
+                  placeholder="Search for products..."
+                  className="w-full bg-transparent pl-10"
+                  autoFocus
+                  defaultValue={defaultSearch}
+                />
+              </div>
+            </form>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
+
+
+export function Header() {
+  const pathname = usePathname();
+  const { totalItems } = useCart();
+
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const navLinks = [
     { href: '/products', label: 'All Products' },
     { href: '#', label: 'New Arrivals' },
@@ -103,15 +147,9 @@ export function Header() {
           <div className="flex items-center space-x-1 sm:space-x-2">
             {/* Search */}
             <div className="flex items-center">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setSearchOpen(!searchOpen)}
-                  className="text-foreground hover:bg-accent"
-                >
-                  <Search className="w-5 h-5" />
-                  <span className="sr-only">Search</span>
-                </Button>
+              <Suspense fallback={<div></div>}>
+                <SearchBar />
+              </Suspense>
             </div >
             
             <Button asChild variant="ghost" size="icon" className="text-foreground hover:bg-accent">
@@ -153,32 +191,6 @@ export function Header() {
             </Sheet>
           </div>
         </div>
-        <AnimatePresence>
-        {searchOpen && (
-          <motion.div 
-            initial={{ height: 0, opacity: 0}}
-            animate={{ height: 'auto', opacity: 1}}
-            exit={{ height: 0, opacity: 0}}
-            className="overflow-hidden lg:absolute lg:top-full lg:left-0 lg:right-0 lg:bg-background lg:border-b"
-          >
-            <div className="container py-4">
-            <form onSubmit={handleSearch}>
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                <Input
-                  type="text"
-                  name="search"
-                  placeholder="Search for products..."
-                  className="w-full bg-transparent pl-10"
-                  autoFocus
-                  defaultValue={defaultSearch}
-                />
-              </div>
-            </form>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
       </div>
 
       {/* Mobile Menu */}
@@ -214,3 +226,5 @@ export function Header() {
     </motion.header>
   );
 }
+
+    
